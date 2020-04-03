@@ -4,8 +4,8 @@ This is a small python3 script that can plot all current infections of the coron
 
 ## usage:
 ``` bash
-git clone https://github.com/hvanderlaan/covid-19
-cd covid-19
+git clone https://github.com/hvanderlaan/covid19
+cd covid19
 pip3 install -r requirements.txt
 
 usage: covid19.py [-h] [-c COUNTRY] [-e EXPORT]
