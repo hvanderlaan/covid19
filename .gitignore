@@ -6,3 +6,4 @@ __pycache__/
 
 # Excluding some default files
 *.pyc
+*.png
