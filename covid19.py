@@ -9,10 +9,11 @@
 #                                                                             #
 # Author : Harald van der Laan                                                #
 # Date   : 2020-04-03                                                         #
-# Version: v1.0.0                                                             #
+# Version: v1.0.1                                                             #
 # =========================================================================== #
 # Changelog:                                                                  #
 # - v1.0.0: Initial commit                              (Harald van der Laan) #
+# - v1.0.1: Update with more graphs                     (Harald van der Laan) #
 # =========================================================================== #
 # Copyright © 2020 Harald van der Laan                                        #
 #                                                                             #
@@ -78,38 +79,57 @@ def main(args):
     infected = []
     deaths = []
     recovered = []
+
+    # ipd = infected per day, dpd = deaths per day
+    # rpd = recovered per day
+    ipd = []
+    dpd = []
+    rpd = []
     counter = 0
 
     data = get_plot_values(url, country)
 
-    # creating a time scale for the x axis.
-    for _ in range(0, len(data) - 1):
+    for entry in data:
+        # x axis of the graph
         xvalues.append(counter)
-        counter = counter + 1
 
-    # Filling the y axis lists with the remote values
-    for _ in range(0, len(data) - 1):
-        infected.append(data[_]['confirmed'])
-        deaths.append(data[_]['deaths'])
-        recovered.append(data[_]['recovered'])
+        # y axis of the graphs
+        infected.append(entry['confirmed'])
+        deaths.append(entry['deaths'])
+        recovered.append(entry['recovered'])
+
+        if counter == 0:
+            ipd.append(data[counter]['confirmed'] - 0)
+            dpd.append(data[counter]['deaths'] - 0)
+            rpd.append(data[counter]['recovered'] - 0)
+        else:
+            ipd.append(data[counter]['confirmed'] - data[counter - 1]['confirmed'])
+            dpd.append(data[counter]['deaths'] - data[counter - 1]['deaths'])
+            rpd.append(data[counter]['recovered'] - data[counter - 1]['recovered'])
+
+        counter += 1
 
     # Creating plots for the graphs.
-    matplotlib.pyplot.figure(figsize=(10, 7))
-    matplotlib.pyplot.subplot(3, 1, 1)
-    matplotlib.pyplot.plot(xvalues, infected, '-ob')
-    matplotlib.pyplot.xlabel('Dag')
-    matplotlib.pyplot.ylabel('Besmettingen')
-    matplotlib.pyplot.title(f'Covid-19 in {country}')
+    fig, ((gr1, gr2), (gr3, gr4), (gr5, gr6)) = matplotlib.pyplot.subplots(3, 2, figsize=(14, 7))
+    fig.suptitle(f'Covid-19 in {args.country}')
 
-    matplotlib.pyplot.subplot(3, 1, 2)
-    matplotlib.pyplot.plot(xvalues, deaths, '-or')
-    matplotlib.pyplot.xlabel('Dag')
-    matplotlib.pyplot.ylabel('Doden')
+    gr1.plot(xvalues, infected, '-ob')
+    gr1.set_title('Totaal aantal besmettingen')
 
-    matplotlib.pyplot.subplot(3, 1, 3)
-    matplotlib.pyplot.plot(xvalues, recovered, '-og')
-    matplotlib.pyplot.xlabel('Dag')
-    matplotlib.pyplot.ylabel('Genezen')
+    gr2.plot(xvalues, ipd, '-ob')
+    gr2.set_title('Besmettingen per dag')
+
+    gr3.plot(xvalues, deaths, '-or')
+    gr3.set_title('Totaal aantal doden')
+
+    gr4.plot(xvalues, dpd, '-or')
+    gr4.set_title('Doden per dag')
+
+    gr5.plot(xvalues, recovered, '-og')
+    gr5.set_title('Totaal aantal genezingen')
+
+    gr6.plot(xvalues, rpd, '-og')
+    gr6.set_title('Genezingen per dag')
 
     if args.export:
         # argument -e is provided save graph to file
