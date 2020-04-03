@@ -1,0 +1,8 @@
+# Excluding some default directory's
+.venv
+.vscode/
+__pycache__/
+.DS_Store/
+
+# Excluding some default files
+*.pyc
