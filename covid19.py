@@ -8,12 +8,14 @@
 # Purpose: Small python script to graph the Covid-19 outbreak                 #
 #                                                                             #
 # Author : Harald van der Laan                                                #
-# Date   : 2020-04-03                                                         #
-# Version: v1.0.1                                                             #
+# Date   : 2020-04-06                                                         #
+# Version: v1.0.2                                                             #
 # =========================================================================== #
 # Changelog:                                                                  #
 # - v1.0.0: Initial commit                              (Harald van der Laan) #
 # - v1.0.1: Update with more graphs                     (Harald van der Laan) #
+# - v1.0.2: Error handling with counrty's that do not                         #
+#           exist or are miss spelled.                  (Harald van der Laan) #
 # =========================================================================== #
 # Copyright © 2020 Harald van der Laan                                        #
 #                                                                             #
@@ -67,7 +69,13 @@ def get_plot_values(url, country):
         sys.stderr.write('Could not connect to API.\n')
         sys.exit(1)
 
-    return jsondata[country]
+    try:
+        result = jsondata[country]
+    except KeyError:
+        sys.stderr.write(f'Could not find country {country}.\n')
+        sys.exit(1)
+
+    return result
 
 
 def main(args):
