@@ -1,4 +1,4 @@
-# covid-19
+# covid-19 [![Build Status](https://travis-ci.org/hvanderlaan/covid19.svg?branch=master)](https://travis-ci.org/hvanderlaan/covid19)
 
 This is a small python3 script that can plot all current infections of the corona virus. The graph will show the rate of infections, deaths and recovered persons over the time. Please nite that the dataset that is used, is updated every 8 hours. This could mean that you are seeing older data.
 
