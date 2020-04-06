@@ -9,13 +9,14 @@
 #                                                                             #
 # Author : Harald van der Laan                                                #
 # Date   : 2020-04-06                                                         #
-# Version: v1.0.2                                                             #
+# Version: v1.0.3                                                             #
 # =========================================================================== #
 # Changelog:                                                                  #
 # - v1.0.0: Initial commit                              (Harald van der Laan) #
 # - v1.0.1: Update with more graphs                     (Harald van der Laan) #
 # - v1.0.2: Error handling with counrty's that do not                         #
 #           exist or are miss spelled.                  (Harald van der Laan) #
+# - v1.0.3: Update with no output for export only       (Harald van der Laan) #
 # =========================================================================== #
 # Copyright © 2020 Harald van der Laan                                        #
 #                                                                             #
@@ -53,6 +54,8 @@ def get_arguments():
                         help="Country to generate graphs of")
     parser.add_argument('-e', '--export',
                         help="Export graph to filename.png")
+    parser.add_argument('-n', '--nogui', action='store_true',
+                        help="Do not display a graph in gui")
 
     return parser.parse_args()
 
@@ -143,7 +146,8 @@ def main(args):
         # argument -e is provided save graph to file
         matplotlib.pyplot.savefig(args.export)
 
-    matplotlib.pyplot.show()
+    if not args.nogui:
+        matplotlib.pyplot.show()
 
 
 if __name__ == "__main__":
