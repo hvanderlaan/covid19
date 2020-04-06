@@ -1,0 +1,4 @@
+language: python
+python:
+    - "3.7"
+script: ./covid19.py -n -e travis.png
