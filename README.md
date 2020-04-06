@@ -20,7 +20,7 @@ optional arguments:
   -n, --nogui           Do not display a graph in gui
 
 eg:
-./covid19 -c Netherlands
+./covid19.py -c Netherlands
 ./covid19.py -c Germany -e Germany-2020-04-06.png
 ./covid19.py -c France -e France-2020-04-06.png -n
 ```
